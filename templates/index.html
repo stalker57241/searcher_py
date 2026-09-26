@@ -9,6 +9,11 @@
         <input type="text" name="query" id="query" placeholder="Найдём всё...">
         <button onclick="search()">Search!</button>
     </span>
-</form>
-<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% block body_end %} {% endblock body_end %}
 {% endblock body %}
+
+{% block scripts %}
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+{% endblock scripts %}

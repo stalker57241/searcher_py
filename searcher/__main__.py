@@ -1,3 +1,5 @@
+import sys
+
 from . import app, elastic
 from elasticsearch import helpers, BadRequestError
 from .posts_grabber import grab_posts
@@ -26,4 +28,4 @@ def update_posts():
 
 if __name__ == "__main__":
     update_posts()
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=sys.argv.count("--debug") > 0)
