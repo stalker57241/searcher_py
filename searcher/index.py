@@ -1,4 +1,4 @@
-from . import app, posts, elastic
+from . import app, posts, elastic, BASE_FOLDER
 from .config import SEARCH_INDEX_NAME
 
 from datetime import datetime
@@ -42,3 +42,13 @@ def search():
     # search_result.sort(key=lambda p: datetime.strptime(p['date'], "%"))
     # sorted(search_result, lambda elem, next: elem['date'] < next['date'])
     return render_template("query.html", question=query_text, posts=posts_[:min(20, len(posts_))] )
+
+@app.delete("/delete/<int:idx>")
+def delete(idx: int):
+    elastic.delete(index=SEARCH_INDEX_NAME, id=idx)
+    resp = app.make_response(200)
+    return resp
+
+@app.get("/openapi.json")
+def openapi_spec():
+    return app.send_static_file("openapi.json")

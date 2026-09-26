@@ -1,0 +1,78 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Search API",
+        "version": "1.0.0",
+        "description": "Поиск по индексу Elasticsearch"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:5000"
+        }
+    ],
+    "paths": {
+        "/search": {
+            "get": {
+                "summary": "Поиск постов",
+                "operationId": "searchPosts",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "required": true,
+                        "description": "Текст запроса",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Post"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Неверный запрос"
+                    }
+                }
+            }
+        },
+        "/delete/<idx>": {
+            "delete": {
+                "summary": "Удаление из индекса",
+                "operationId": "deletePosts",
+                "responses": {
+                    "200": {
+                        "description": "Успешно удалено"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Post": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Идентификатор поста"
+                    },
+                    "text": {
+                        "type": "string",
+                        "description": "Текст поста"
+                    }
+                }
+            }
+        }
+    }
+}
