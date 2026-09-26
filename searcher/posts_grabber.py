@@ -1,8 +1,13 @@
 import csv
-from . import POSTS_FILE
 
-def grab_posts() -> list[dict]:
+def grab_posts(file: Path) -> list[dict]:
     data = []
-    with open(POSTS_FILE, "r") as f:
-        data = csv.DictReader(f)
-    print(data)
+    with open(file, "r") as f:
+        _data = csv.DictReader(f)
+        idx = 0
+        for elem in _data:
+            elem["id"] = idx
+            idx += 1
+            data.append(elem)
+    # print(data)
+    return data

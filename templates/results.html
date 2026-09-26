@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="ru">
-    <head>
-        <title>Searcher...</title>
-        <link rel="stylesheet" href="basic.css">
-    </head>
-    <body>
+{% extends "base.html" %}
+{% block title %}Searching {{ question }} {% endblock title %}
+{% block body %}
         <div id="content">
-            <h1>Results</h1>
+            <h1>Results for {{ question }}</h1>
             <ul id="results">
-                <li>Result</li>
+                {% for post in posts %}
+                <li>{{ post["_source"]["id"] }}</li>
+                {% endfor  %}
             </ul>
         </div>
-    </body>
-</html>
+{% endblock body %}

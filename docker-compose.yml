@@ -1,0 +1,48 @@
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+    container_name: elasticsearch
+    environment:
+    - discovery.type=single-node
+    - xpack.security.enabled=false
+    - network.host=0.0.0.0
+    - xpack.security.http.ssl.enabled=false
+    - xpack.security.transport.ssl.enabled=false
+    - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+    - "9200:9200"
+    volumes:
+    - esdata:/usr/share/elasticsearch/data
+    networks:
+    - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9200/_cluster/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  searcher:
+    build:
+      context: .
+      dockerfile: DockerFile
+    container_name: searcher
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+        
+    networks:
+    - app-network
+    ports:
+      - "5000:5000"
+
+volumes:
+  esdata:
+
+networks:
+  app-network:
+    driver: bridge

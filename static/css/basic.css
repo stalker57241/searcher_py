@@ -1,0 +1,14 @@
+body {
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+h2>a {
+    color: white;
+    text-decoration: none;
+}
+h2 {
+    align-self: center;
+}
