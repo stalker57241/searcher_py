@@ -1,20 +1,19 @@
-<!DOCTYPE html>
-<html lang="ru">
-    <head>
-        <title>Searcher...</title>
-        <link rel="stylesheet" href="basic.css">
-    </head>
-    <body>
-        <form action="/results" method="post"> <table>
-            <tr> <td><label>Search engine</label><br></td> </tr>
-            <tr>
-                <td>
-                    <input type="text" name="request" id="request">
-                </td>
-                <td>
-                    <input type="submit" value="Search!">
-                </td>
-            </tr>
-        </table></form>
-    </body>
-</html>
+{% extends "base.html" %}
+{% block title %}Searcher... {% endblock title %}
+{% block headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock headers %}
+{% block body %}
+    <label for="query">Search engine</label>
+    <span>
+        <input type="text" name="query" id="query" placeholder="Найдём всё...">
+        <button onclick="search()">Search!</button>
+    </span>
+{% block body_end %} {% endblock body_end %}
+{% endblock body %}
+
+{% block scripts %}
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+{% endblock scripts %}

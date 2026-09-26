@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+{% block title %}Searching {{ question }} {% endblock title %}
+{% block body_end %}
+<div id="content">
+{% if posts|count > 0 %}
+    <h1>Результаты по запросу {{ question }} отсутствуют</h1>
+    <table id="results">
+        <tr>
+            <th>Created date</th>
+            <th>Text</th>
+            <th>Rubrics</th>
+        </tr>
+        {% for post in posts %}
+        <tr>
+            <td>{{ post["created_date"] }}</td>
+            <td>{{ post["text"] }}</td>
+            <td><ul>{% for rubric in post["rubrics"] %}<li>{{ rubric }}</li>{% endfor %}</ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <h1>Результаты по запросу {{ question }} отсутствуют</h1>
+{% endif %}
+</div>
+{% endblock body_end %}
